@@ -1,5 +1,8 @@
 package com.nklimkin.telegram.bot.bots;
 
+import com.nklimkin.telegram.bot.command.CommandContainer;
+import com.nklimkin.telegram.bot.command.CommandName;
+import com.nklimkin.telegram.bot.service.SendBotMessageServiceImpl;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -10,11 +13,19 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 @Component
 public class MyTelegramBot extends TelegramLongPollingBot {
 
+    private static final String COMMAND_PREFIX = "/";
+
     @Value("${bot.username}")
     private String userName;
 
     @Value("${bot.token}")
     private String token;
+
+    private final CommandContainer commandContainer;
+
+    public MyTelegramBot() {
+        this.commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this));
+    }
 
     @Override
     public String getBotUsername() {
@@ -30,16 +41,12 @@ public class MyTelegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         if (update.hasMessage() && update.getMessage().hasText()) {
             String message = update.getMessage().getText().trim();
-            String chatId = update.getMessage().getChatId().toString();
-
-            SendMessage sendMessage = new SendMessage();
-            sendMessage.setChatId(chatId);
-            sendMessage.setText(message);
-
-            try {
-                execute(sendMessage);
-            } catch (TelegramApiException e) {
-                e.printStackTrace();
+            if (message.startsWith(COMMAND_PREFIX)) {
+                String commandIdentifier = message.split(" ")[0].toLowerCase();
+                commandContainer.retrieveCommand(commandIdentifier).execute(update);
+            }
+            else {
+                commandContainer.retrieveCommand(CommandName.NO.getCommandName()).execute(update);
             }
         }
     }
