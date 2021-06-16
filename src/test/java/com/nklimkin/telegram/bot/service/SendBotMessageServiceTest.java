@@ -29,6 +29,7 @@ class SendBotMessageServiceTest {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
         sendMessage.setText(message);
+        sendMessage.enableHtml(true);
 
         botMessageService.sendMessage(chatId, message);
 

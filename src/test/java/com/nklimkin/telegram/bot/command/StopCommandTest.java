@@ -6,12 +6,12 @@ class StopCommandTest extends AbstractCommandTest {
 
     @Override
     String getCommandName() {
-        return "/stop";
+        return CommandName.STOP.getCommandName();
     }
 
     @Override
     String getCommandMessage() {
-        return CommandName.STOP.getCommandName();
+        return StopCommand.STOP_MESSAGE;
     }
 
     @Override
