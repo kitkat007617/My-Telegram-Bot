@@ -3,6 +3,7 @@ package com.nklimkin.telegram.bot.command;
 import com.nklimkin.telegram.bot.bots.MyTelegramBot;
 import com.nklimkin.telegram.bot.service.SendBotMessageService;
 import com.nklimkin.telegram.bot.service.SendBotMessageServiceImpl;
+import com.nklimkin.telegram.bot.service.TelegramUserService;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,6 +15,7 @@ public abstract class AbstractCommandTest {
 
     protected MyTelegramBot telegramBot = Mockito.mock(MyTelegramBot.class);
     protected SendBotMessageService botMessageService = new SendBotMessageServiceImpl(telegramBot);
+    protected TelegramUserService userService = Mockito.mock(TelegramUserService.class);
 
     abstract String getCommandName();
 

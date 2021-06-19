@@ -1,0 +1,12 @@
+version: '3.1'
+
+services:
+  tb-db:
+    image: postgres
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=dev_tb_db
+    ports:
+    - '5438:5432'

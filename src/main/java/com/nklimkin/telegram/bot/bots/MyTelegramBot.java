@@ -3,6 +3,8 @@ package com.nklimkin.telegram.bot.bots;
 import com.nklimkin.telegram.bot.command.CommandContainer;
 import com.nklimkin.telegram.bot.command.CommandName;
 import com.nklimkin.telegram.bot.service.SendBotMessageServiceImpl;
+import com.nklimkin.telegram.bot.service.TelegramUserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
@@ -23,8 +25,9 @@ public class MyTelegramBot extends TelegramLongPollingBot {
 
     private final CommandContainer commandContainer;
 
-    public MyTelegramBot() {
-        this.commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this));
+    @Autowired
+    public MyTelegramBot(TelegramUserService userService) {
+        this.commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this), userService);
     }
 
     @Override
