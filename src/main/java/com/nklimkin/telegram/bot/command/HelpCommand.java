@@ -8,11 +8,15 @@ public class HelpCommand implements Command {
     private SendBotMessageService messageService;
 
     public static final String HELP_MESSAGE = String.format("<b>Доступные команды</b>\n\n" +
-            "Начать работу с ботом - %s\n" +
-            "Приостоновить работу с ботом - %s\n" +
-            "Получить помощь в работе - %s\n" +
-                    "Посмотреть статистику по боту - %s", CommandName.START.getCommandName(), CommandName.STOP.getCommandName(),
-            CommandName.HELP.getCommandName(), CommandName.STAT.getCommandName());
+                    "Начать работу с ботом - %s\n" +
+                    "Приостоновить работу с ботом - %s\n" +
+                    "Получить помощь в работе - %s\n" +
+                    "Посмотреть статистику по боту - %s\n" +
+                    "Подписаться на группы - %s\n" +
+                    "Посмотреть список подписок - %s\n",
+            CommandName.START.getCommandName(), CommandName.STOP.getCommandName(), CommandName.HELP.getCommandName(),
+            CommandName.STAT.getCommandName(), CommandName.ADD_GROUP_SUB.getCommandName(),
+            CommandName.LIST_GROUP_SUB.getCommandName());
 
     public HelpCommand(SendBotMessageService messageService) {
         this.messageService = messageService;
